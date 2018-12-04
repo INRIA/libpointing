@@ -9,11 +9,12 @@ window.onload = function() {
 	    function resizeCanvas() {
 	            canvas.width = window.innerWidth;
 	            canvas.height = window.innerHeight;
-
+	            checkCurrentDisplay();
 	            /**
 	             * Your drawings need to be inside this function otherwise they will be reset when 
 	             * you resize the browser window and the canvas goes will be cleared.
 	             */
+
 	            drawStuff(); 
 	    }
 	    resizeCanvas();
@@ -136,10 +137,74 @@ window.onload = function() {
 	})();
 }
 
+
+var dManager = new pointing.DisplayDeviceManager();
+var displays = [];
+dManager.addDeviceUpdateCallback(function(deviceDescriptor, wasAdded) {
+	displays.forEach(function(display) {
+		display.dispose();
+	});
+	displays = [];
+	dManager.deviceList.forEach(function(desc) {
+		var displayDevice = new pointing.DisplayDevice(desc.devURI);
+
+		
+		displayDevice.ready(function() {
+			displays.push(displayDevice);
+			checkCurrentDisplay();
+		});
+	});
+});
+
+
+function dist(a, b) {
+	var dx = a.x - b.x;
+	var dy = a.y - b.y;
+
+	return Math.sqrt(dx*dx+dy*dy);
+}
+
+ 
+var output = new pointing.DisplayDevice("any:?");
+
+// Will set "output" to the proper display (the one rendering the webpage) in case of multiple monitors
+function checkCurrentDisplay() {
+	var screenWidth = window.screen.width;
+	var screenHeight = window.screen.height;
+
+	var currentDisplay = null;
+
+	// Find the display used to render this page by matching screenSize with displaySize
+	displays.forEach(function(display) {
+		var displayWidth = display.bounds.size.width;
+		var displayHeight = display.bounds.size.height;
+
+		if (displayWidth == screenWidth && displayHeight == screenHeight) {
+			if (currentDisplay != null) {
+				// Two displays have the same resolution, we distinguish them by using their positions, if supported
+				if (typeof window.screen.availLeft !== 'undefined' && typeof window.screen.availTop !== 'undefined') {
+					var currDisplayPos = currentDisplay.bounds.origin;
+					var displayPos = display.bounds.origin;
+					var screenPos = {x: window.screen.availLeft, y: window.screen.availTop};
+
+					if (dist(displayPos, screenPos) < dist(currDisplayPos, screenPos)) {
+						currentDisplay = display;
+					}
+				}
+			} else {
+				currentDisplay = display;
+			}
+		}
+	});
+
+	if (currentDisplay != null) {
+		output = currentDisplay;
+	}
+}
+
+
 var mice = [];
 var manager = new pointing.PointingDeviceManager();
-
-var output = new pointing.DisplayDevice("any:?");
 
 var tFuncs = [
 {name: "OS X with default slider setting",
