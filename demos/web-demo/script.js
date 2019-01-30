@@ -106,7 +106,8 @@ window.onload = function() {
     		output.ready(function () {
     			if (pointing.pointingIsAvailable) {
 	    			context.strokeRect(200, 200, output.resolution.hppi*3.370, output.resolution.vppi*2.125);
-	    			context.drawImage(imageCB, 200, 200, output.resolution.hppi*3.370, output.resolution.vppi*2.125);
+	    			if (imageCB.complete)
+	    				context.drawImage(imageCB, 200, 200, output.resolution.hppi*3.370, output.resolution.vppi*2.125);
 	    			context.font = "14px Arial";
 	    			context.fillText("The dimensions of this rectangle should be exactly the size of a credit card", 200, 180)
 	    		}
