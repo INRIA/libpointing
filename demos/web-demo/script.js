@@ -1,7 +1,10 @@
 window.onload = function() {
 	(function() {
 	    var canvas = document.getElementById('canvas'),
-	            context = canvas.getContext('2d');
+	            context = canvas.getContext('2d'),
+	    		idInstructions =  document.getElementById('installpointingserver');
+	    var imageCB = new Image();
+	    imageCB.src = "ccard.png";
 
 	    // resize the canvas to fill browser window dynamically
 	    window.addEventListener('resize', resizeCanvas, false);
@@ -57,10 +60,15 @@ window.onload = function() {
 	    	context.save();
 	    	context.font = "15px Arial";
 	    	if (!pointing.pointingIsAvailable) {
-	    		var text = "pointingserver is not running. First run 'pointingserver start' in a terminal and refresh this page."
-	    		context.fillText(text, 15, 27);
-	    	} else {
+	    		idInstructions.innerHTML = "<p>PointingServer is not running. Install PointingServer, using \
+	    		<a href=\"https://github.com/INRIA/libpointing/wiki/Javascript-Bindings\" target=\"_blank\">npm</a>,\
+	    		 <a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.0-mac.dmg\" target=\"_blank\">Mac installer</a> or \
+	    		 <a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.0-setup_x86.exe\" target=\"_blank\">Windows installer</a>.</p>"
 
+	    		//var text = "pointingserver is not running. First run 'pointingserver start' in a terminal and refresh this page."
+	    		//context.fillText(text, 15, 27);
+	    	} else {
+	    		idInstructions.innerHTML = "";
 		    	output.ready(function () {
 			    	var text = "Display Device: " + output.bounds.size.width + " x " + output.bounds.size.height + " pixels, ";
 			    	text += output.size.width.toFixed(2) + " x " + output.size.height.toFixed(2) + " mm, ";
@@ -95,17 +103,22 @@ window.onload = function() {
 	    function drawStuff() {
     		context.clearRect(0, 0, canvas.width, canvas.height);
     		output.ready(function () {
-    			context.strokeRect(200, 200, output.resolution.hppi*3.370, output.resolution.vppi*2.125);
-    			context.font = "14px Arial";
-    			context.fillText("The dimensions of this rectangle should be exactly the size of a credit card", 210, 300)
-    		});
+    			if (pointing.pointingIsAvailable) {
+	    			context.strokeRect(200, 200, output.resolution.hppi*3.370, output.resolution.vppi*2.125);
+	    			context.drawImage(imageCB, 200, 200, output.resolution.hppi*3.370, output.resolution.vppi*2.125);
+	    			context.font = "14px Arial";
+	    			context.fillText("The dimensions of this rectangle should be exactly the size of a credit card", 200, 180)
+	    		}
+	    		});
 		    drawInfo();
-		    for (var i = 0; i < mice.length; i++) {
-		    	verifyPosition(mice[i]);
-	    		drawPointer(mice[i].x, mice[i].y, colors[i]);
-	    		var fInd = (funcIndex + i) % tFuncs.length;
-	    		drawFuncs(tFuncs[fInd].name, tFuncs[fInd].uri, mice[i].x, mice[i].y);
-		    }
+		    if (pointing.pointingIsAvailable) {
+			    for (var i = 0; i < mice.length; i++) {
+			    	verifyPosition(mice[i]);
+		    		drawPointer(mice[i].x, mice[i].y, colors[i]);
+		    		var fInd = (funcIndex + i) % tFuncs.length;
+		    		drawFuncs(tFuncs[fInd].name, tFuncs[fInd].uri, mice[i].x, mice[i].y);
+			    }
+			}
 		    requestAnimationFrame(drawStuff);
 	    }
 
@@ -171,7 +184,7 @@ var funcIndex = 0;
 manager.addDeviceUpdateCallback(function(deviceDescriptor, wasAdded) {
 	if (wasAdded) {
 		var pointingDevice = new pointing.PointingDevice(deviceDescriptor.devURI);
-		var mouse = {x: 400 + 20 * mice.length, y: 400, pointingDevice: pointingDevice};
+		var mouse = {x: 400 + 20 * mice.length, y: 450, pointingDevice: pointingDevice};
 		mice.push(mouse);
 		var fInd = (funcIndex + mice.length - 1) % tFuncs.length;
 		var tFunc = new pointing.TransferFunction(tFuncs[fInd].uri, mouse.pointingDevice, output);
