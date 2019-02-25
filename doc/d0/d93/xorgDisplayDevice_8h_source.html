@@ -107,50 +107,62 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;pointing/output/DisplayDevice.h&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;X11/Xlib.h&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span>pointing {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">   25</a></span>&#160;  <span class="keyword">class </span><a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">xorgDisplayDevice</a> : <span class="keyword">public</span> <a class="code" href="../../d9/d23/classpointing_1_1DisplayDevice.html">DisplayDevice</a> {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    Display *dpy ;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">enum</span> {NOTHING=0, BOUNDS=1, SIZE=2, REFRESHRATE=4} cachedinfo ;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">int</span> cached ;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="../../d5/d0a/structpointing_1_1DisplayDevice_1_1Bounds.html">DisplayDevice::Bounds</a> cached_bounds ;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="../../d3/db9/structpointing_1_1DisplayDevice_1_1Size.html">DisplayDevice::Size</a> cached_size ;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">double</span> cached_refreshrate ;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">xorgDisplayDevice</a>(<span class="keywordtype">void</span>) ;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">xorgDisplayDevice</a>(URI uri) ;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="../../d5/d0a/structpointing_1_1DisplayDevice_1_1Bounds.html">Bounds</a> <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a7ae0976d0daba6bdf4f5470675ff241b">getBounds</a>(<a class="code" href="../../d5/d0a/structpointing_1_1DisplayDevice_1_1Bounds.html">Bounds</a> *defval=0) ;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="../../d3/db9/structpointing_1_1DisplayDevice_1_1Size.html">Size</a> <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#af1195fb4eebee030e7ddd94d7a81324b">getSize</a>(<a class="code" href="../../d3/db9/structpointing_1_1DisplayDevice_1_1Size.html">Size</a> *defval=0) ;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a32f868b0742a0fdb5273078ed9a560c6">getRefreshRate</a>(<span class="keywordtype">double</span> *defval=0) ;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    URI <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a5a678589b3d5203124a136de07ca156c">getURI</a>(<span class="keywordtype">bool</span> expanded=<span class="keyword">false</span>) <span class="keyword">const</span> ;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    ~<a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">xorgDisplayDevice</a>(<span class="keywordtype">void</span>) ;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  } ;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;X11/extensions/Xrandr.h&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;X11/Xlib.h&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>pointing {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">   26</a></span>&#160;  <span class="keyword">class </span><a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">xorgDisplayDevice</a> : <span class="keyword">public</span> <a class="code" href="../../d9/d23/classpointing_1_1DisplayDevice.html">DisplayDevice</a> {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    Display *dpy ;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">int</span> screen;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    Window root;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    XRRScreenResources *res;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    XRROutputInfo* output_info;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">int</span> displayID;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">enum</span> {NOTHING=0, BOUNDS=1, SIZE=2, REFRESHRATE=4} cachedinfo ;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">int</span> cached ;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="../../d5/d0a/structpointing_1_1DisplayDevice_1_1Bounds.html">DisplayDevice::Bounds</a> cached_bounds ;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="../../d3/db9/structpointing_1_1DisplayDevice_1_1Size.html">DisplayDevice::Size</a> cached_size ;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">double</span> cached_refreshrate ;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    XRRModeInfo* get_mode_info(RRMode mode);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">bool</span> get_bounds(<span class="keywordtype">int</span>* width, <span class="keywordtype">int</span>* height, <span class="keywordtype">int</span>* x, <span class="keywordtype">int</span>* y);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">int</span> get_any_display_id();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> initialize();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">xorgDisplayDevice</a>(<span class="keywordtype">void</span>) ;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">xorgDisplayDevice</a>(URI uri) ;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html_af1195fb4eebee030e7ddd94d7a81324b"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#af1195fb4eebee030e7ddd94d7a81324b">pointing::xorgDisplayDevice::getSize</a></div><div class="ttdeci">Size getSize(Size *defval=0)</div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.cpp:60</div></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="../../d5/d0a/structpointing_1_1DisplayDevice_1_1Bounds.html">Bounds</a> <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a7ae0976d0daba6bdf4f5470675ff241b">getBounds</a>(<a class="code" href="../../d5/d0a/structpointing_1_1DisplayDevice_1_1Bounds.html">Bounds</a> *defval=0) ;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="../../d3/db9/structpointing_1_1DisplayDevice_1_1Size.html">Size</a> <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#af1195fb4eebee030e7ddd94d7a81324b">getSize</a>(<a class="code" href="../../d3/db9/structpointing_1_1DisplayDevice_1_1Size.html">Size</a> *defval=0) ;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a32f868b0742a0fdb5273078ed9a560c6">getRefreshRate</a>(<span class="keywordtype">double</span> *defval=0) ;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    URI <a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a5a678589b3d5203124a136de07ca156c">getURI</a>(<span class="keywordtype">bool</span> expanded=<span class="keyword">false</span>) <span class="keyword">const</span> ;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    ~<a class="code" href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">xorgDisplayDevice</a>(<span class="keywordtype">void</span>) ;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  } ;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html_af1195fb4eebee030e7ddd94d7a81324b"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#af1195fb4eebee030e7ddd94d7a81324b">pointing::xorgDisplayDevice::getSize</a></div><div class="ttdeci">Size getSize(Size *defval=0)</div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.cpp:149</div></div>
 <div class="ttc" id="structpointing_1_1DisplayDevice_1_1Bounds_html"><div class="ttname"><a href="../../d5/d0a/structpointing_1_1DisplayDevice_1_1Bounds.html">pointing::DisplayDevice::Bounds</a></div><div class="ttdoc">Display bounds (origin and size) in pixels. </div><div class="ttdef"><b>Definition:</b> DisplayDevice.h:60</div></div>
-<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html_a5a678589b3d5203124a136de07ca156c"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a5a678589b3d5203124a136de07ca156c">pointing::xorgDisplayDevice::getURI</a></div><div class="ttdeci">URI getURI(bool expanded=false) const </div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.cpp:84</div></div>
+<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html_a5a678589b3d5203124a136de07ca156c"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a5a678589b3d5203124a136de07ca156c">pointing::xorgDisplayDevice::getURI</a></div><div class="ttdeci">URI getURI(bool expanded=false) const </div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.cpp:170</div></div>
 <div class="ttc" id="classpointing_1_1DisplayDevice_html"><div class="ttname"><a href="../../d9/d23/classpointing_1_1DisplayDevice.html">pointing::DisplayDevice</a></div><div class="ttdoc">DisplayDevice class is used to represent the displays connected to the computer. </div><div class="ttdef"><b>Definition:</b> DisplayDevice.h:31</div></div>
 <div class="ttc" id="structpointing_1_1DisplayDevice_1_1Size_html"><div class="ttname"><a href="../../d3/db9/structpointing_1_1DisplayDevice_1_1Size.html">pointing::DisplayDevice::Size</a></div><div class="ttdoc">Display size in mms. </div><div class="ttdef"><b>Definition:</b> DisplayDevice.h:51</div></div>
-<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">pointing::xorgDisplayDevice</a></div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.h:25</div></div>
-<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html_a32f868b0742a0fdb5273078ed9a560c6"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a32f868b0742a0fdb5273078ed9a560c6">pointing::xorgDisplayDevice::getRefreshRate</a></div><div class="ttdeci">double getRefreshRate(double *defval=0)</div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.cpp:72</div></div>
-<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html_a7ae0976d0daba6bdf4f5470675ff241b"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a7ae0976d0daba6bdf4f5470675ff241b">pointing::xorgDisplayDevice::getBounds</a></div><div class="ttdeci">Bounds getBounds(Bounds *defval=0)</div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.cpp:47</div></div>
+<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html">pointing::xorgDisplayDevice</a></div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.h:26</div></div>
+<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html_a32f868b0742a0fdb5273078ed9a560c6"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a32f868b0742a0fdb5273078ed9a560c6">pointing::xorgDisplayDevice::getRefreshRate</a></div><div class="ttdeci">double getRefreshRate(double *defval=0)</div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.cpp:159</div></div>
+<div class="ttc" id="classpointing_1_1xorgDisplayDevice_html_a7ae0976d0daba6bdf4f5470675ff241b"><div class="ttname"><a href="../../d7/d55/classpointing_1_1xorgDisplayDevice.html#a7ae0976d0daba6bdf4f5470675ff241b">pointing::xorgDisplayDevice::getBounds</a></div><div class="ttdeci">Bounds getBounds(Bounds *defval=0)</div><div class="ttdef"><b>Definition:</b> xorgDisplayDevice.cpp:132</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 1 2017 08:08:14 for Libpointing by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 25 2019 11:03:16 for Libpointing by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
