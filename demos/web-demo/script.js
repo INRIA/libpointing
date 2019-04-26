@@ -63,8 +63,8 @@ window.onload = function() {
 	    	if (!pointing.pointingIsAvailable) {
 	    		idInstructions.innerHTML = "<p>PointingServer is not running. Install PointingServer, using \
 	    		<a href=\"https://github.com/INRIA/libpointing/wiki/Javascript-Bindings\" target=\"_blank\">npm</a>,\
-	    		 <a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.0-mac.dmg\" target=\"_blank\">Mac installer</a> or \
-	    		 <a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.0-setup_x86.exe\" target=\"_blank\">Windows installer</a>.</p>"
+	    		 <a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.1-mac.dmg\" target=\"_blank\">Mac installer</a> or \
+	    		 <a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.1-setup_x86.exe\" target=\"_blank\">Windows installer</a>.</p>"
 
 	    		//var text = "pointingserver is not running. First run 'pointingserver start' in a terminal and refresh this page."
 	    		//context.fillText(text, 15, 27);
