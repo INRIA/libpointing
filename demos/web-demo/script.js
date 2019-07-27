@@ -5,6 +5,7 @@ window.onload = function() {
 	    		idInstructions =  document.getElementById('installpointingserver');
 	    var imageCB = new Image();
 	    imageCB.src = "ccard.png";
+	    var pointingPreviousState = false;
 
 	    // resize the canvas to fill browser window dynamically
 	    window.addEventListener('resize', resizeCanvas, false);
@@ -60,12 +61,15 @@ window.onload = function() {
 	    function drawInfo() {
 	    	context.save();
 	    	context.font = "15px Arial";
-	    	if (!pointing.pointingIsAvailable) {
-	    		idInstructions.innerHTML = "<p>PointingServer is not running. Install PointingServer, using \
-	    		<a href=\"https://github.com/INRIA/libpointing/wiki/Javascript-Bindings\" target=\"_blank\">npm</a>,\
-	    		 <a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.1-mac.dmg\" target=\"_blank\">Mac installer</a> or \
-	    		 <a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.1-setup_x86.exe\" target=\"_blank\">Windows installer</a>.</p>"
 
+	    	if (!pointing.pointingIsAvailable) {
+	    		if (pointing.pointingIsAvailable != pointingPreviousState) {
+	    			idInstructions.innerHTML = "<p>PointingServer is not running. Install PointingServer, using \
+	    								<a href=\"https://github.com/INRIA/libpointing/wiki/Javascript-Bindings\" target=\"_blank\">npm</a>,\
+	    		 						<a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.1-mac.dmg\" target=\"_blank\">Mac installer</a> or \
+	    		 						<a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.1-setup_x86.exe\" target=\"_blank\">Windows installer</a>.</p>";
+	    		 	alreadyDisplayed = true;
+	    		 }
 	    		//var text = "pointingserver is not running. First run 'pointingserver start' in a terminal and refresh this page."
 	    		//context.fillText(text, 15, 27);
 	    	} else {
@@ -89,6 +93,7 @@ window.onload = function() {
 		    	context.fillText("Press [Enter] to switch transfer functions", 15, 75 + 20 *i++);
 		    	context.fillText("Press [Space] to reset pointers", 15, 75 + 20 *i++)
 		    }
+		    pointingPreviousState = pointing.pointingIsAvailable;
 	    	context.restore();
 	    }
 
