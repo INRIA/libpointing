@@ -5,7 +5,7 @@ window.onload = function() {
 	    		idInstructions =  document.getElementById('installpointingserver');
 	    var imageCB = new Image();
 	    imageCB.src = "ccard.png";
-	    var pointingPreviousState = false;
+	    var pointingPreviousState = true;
 
 	    // resize the canvas to fill browser window dynamically
 	    window.addEventListener('resize', resizeCanvas, false);
@@ -68,7 +68,6 @@ window.onload = function() {
 	    								<a href=\"https://github.com/INRIA/libpointing/wiki/Javascript-Bindings\" target=\"_blank\">npm</a>,\
 	    		 						<a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.1-mac.dmg\" target=\"_blank\">Mac installer</a> or \
 	    		 						<a href=\"https://github.com/INRIA/libpointing/releases/download/v1.0.7/pointingserver-1.0.1-setup_x86.exe\" target=\"_blank\">Windows installer</a>.</p>";
-	    		 	alreadyDisplayed = true;
 	    		 }
 	    		//var text = "pointingserver is not running. First run 'pointingserver start' in a terminal and refresh this page."
 	    		//context.fillText(text, 15, 27);
