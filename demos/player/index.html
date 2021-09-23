@@ -28,20 +28,23 @@
         </style>
         <title>SubPixel Video Demo</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-        <script src="http://libpointing.org/js/pointing.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
-        <script src="https://www.youtube.com/iframe_api"></script>
+        <script src="https://libpointing.org/js/pointing.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+        <script src="https://www.youtube.com/iframe_api"></script>       
     </head>
     <body>
         <div class="center">
-            <p align="center">This page demonstrates SubPixel Interaction by using a custom slider. In order to use it, <b>pointingserver</b> must be installed and run. Please refer to <a href="https://github.com/INRIA/libpointing/wiki/Javascript-Bindings">this page</a> for details. </p><br>
+            <p align="center">This page demonstrates SubPixel Interaction by using a custom slider. In order to use it, <b>pointingserver</b> must be installed and run. Please refer to <a href="https://github.com/INRIA/libpointing/wiki/Javascript-Bindings">this page</a> for details. First make sure your mouse or touchpad is working with the <a href="http://inria.github.io/libpointing/demos/web-demo/">web-demo</a></p><br/>
+            The slider is 600 pixels wide and the video contains 108 000 frames so 1 pixel = 180 frames.
+            <div id="status"></div>
+            <br/><br/>
             <div id="video-placeholder"></div>
             <script src="https://www.youtube.com/iframe_api"></script>
-            <script src="script.js"></script>
 
             <canvas id="canvas" width="600" height="100" style="position:relative;">
             </canvas>
         </div>
     </body>
+    <script src="script.js"></script>
 </html>

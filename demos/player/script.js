@@ -4,11 +4,13 @@ var player,
 var sliderWidth = 600;
 var handlePosX = 0;
 
+
+
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('video-placeholder', {
         width: sliderWidth,
-        height: 400,
-        videoId: 'WBu2pJpgKEo',
+        height: 460,
+        videoId: 'xY7fxOcw9UU',
         events: {
             onReady: initialize
         }
@@ -41,8 +43,18 @@ function updateProgressBar(){
 
 window.onload = function() {
 	(function() {
+		var mice = [];
+		var manager = new pointing.PointingDeviceManager();
+		var output = new pointing.DisplayDevice("any:")
+
 	    var canvas = document.getElementById('canvas'),
 	        context = canvas.getContext('2d');
+
+	    if (!pointing.pointingIsAvailable) {
+	    	document.getElementById('status').innerHTML = "<b>PointingServer not started</b>";
+	    } else {
+	    	document.getElementById('status').innerHTML = "<b>PointingServer started</b>";
+	    }
 
 		function getMousePos(canvas, evt) {
 			var rect = canvas.getBoundingClientRect();
@@ -57,17 +69,25 @@ window.onload = function() {
 	    mouse.leftButtonPressed = false;
 
 		canvas.addEventListener('mousemove', function(evt) {
+			//console.log('mousemove');
 			var mousePos = getMousePos(canvas, evt);
 			mouse.x = mousePos.x;
 			mouse.y = mousePos.y;
 		}, false);
 
+		canvas.addEventListener('mousedown', function(evt) {
+			var mousePos = getMousePos(canvas, evt);
+			handlePosX = mousePos.x;
+			var newTime = player.getDuration() * handlePosX / sliderWidth; // Skip video to new time.
+			player.seekTo(newTime);			
+		}, false);
+
 		canvas.addEventListener('mouseenter', function(evt) {
-			//console.log('mouseenter');
+			// console.log('mouseenter');
 			mouse.isInsideCanvas = true;
 		}, false);
 		canvas.addEventListener('mouseleave', function(evt) {
-			//console.log('mouseleave');
+			// console.log('mouseleave');
 			mouse.isInsideCanvas = false;
 		}, false);
 
@@ -101,22 +121,28 @@ window.onload = function() {
 	    	drawSlider();
 	    }
 
-		var manager = new pointing.PointingDeviceManager();
-		var output = new pointing.DisplayDevice("any:")
+
 		var shouldMoveVideo = false;
+
+
+	    var loop = setInterval(function() {
+    		context.clearRect(0, 0, canvas.width, canvas.height);
+    		drawStuff();
+		}, 1000/fps);
 
 		manager.addDeviceUpdateCallback(function(deviceDescriptor, wasAdded) {
 			if (wasAdded) {
 				var pointingDevice = new pointing.PointingDevice(deviceDescriptor.devURI + "?cpi=400");
 				var transferFunction = new pointing.TransferFunction("osx:?debugLevel=2", pointingDevice, output);
-				transferFunction.setSubPixeling(true).setCardinalitySize(27 * 3600, sliderWidth);
+				transferFunction.setSubPixeling(true).setCardinalitySize(30 * 3600, sliderWidth);
 				pointingDevice.applyTransferFunction(transferFunction, true);
 
 				pointingDevice.setPointingCallback(function(timestamp, dx, dy, buttons) {
 					if ((buttons & 1) == 1) {
 						if (isInsideSlider()) {
-							document.body.style.cursor = 'none';
+							//document.body.style.cursor = 'none';
 							shouldMoveVideo = true;
+							player.pauseVideo();
 						}
 					}
 					else {
@@ -125,7 +151,7 @@ window.onload = function() {
 					}
 					if (shouldMoveVideo) {
 						if (dx) {
-							console.log(dx);
+							//console.log(dx);
 							handlePosX += dx;
 							if (handlePosX > sliderWidth)
 								handlePosX = sliderWidth;
@@ -133,16 +159,25 @@ window.onload = function() {
 								handlePosX = 0;
 						}
 						var newTime = player.getDuration() * handlePosX / sliderWidth; // Skip video to new time.
-    					player.seekTo(newTime);
+						player.seekTo(newTime);
+						updateProgressBar();
 					}
 				});
+			} else {
+		    	for (var i = 0; i < mice.length; i++) {
+		    		if (mice[i].pointingDevice.uri == deviceDescriptor.devURI) {
+		    			mice[i].pointingDevice.dispose();
+		    			mice.splice(i, 1);
+		    			break;
+		    		}
+		    	}
 			}
 		});
 
-	    var loop = setInterval(function() {
-    		context.clearRect(0, 0, canvas.width, canvas.height);
-    		drawStuff();
-		}, 1000/fps);
 
 	})();
 }
+
+
+
+
