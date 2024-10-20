@@ -17,3 +17,7 @@ POINTING = ../..
 include($$POINTING/pointing/pointing.pri)
 
 HEADERS   += pointingdevice.h
+
+macx {
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64
+}

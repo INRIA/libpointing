@@ -16,4 +16,8 @@ TARGET = interpolation
 POINTING = ../..
 include($$POINTING/pointing/pointing.pri)
 
+macx {
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64
+}
+
 HEADERS   += interpolation.h

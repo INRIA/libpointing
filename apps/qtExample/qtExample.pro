@@ -11,5 +11,9 @@ QT += openglwidgets
 POINTING = ../..
 include($$POINTING/pointing/pointing.pri)
 
+macx {
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64
+}
+
 HEADERS   += BallisticsPlayground.h
 SOURCES   += BallisticsPlayground.cpp ballistics.cpp
