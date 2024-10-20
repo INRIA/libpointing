@@ -21,7 +21,7 @@ cdef extern from "Python.h":
 	 
 cdef void defaultCallback(void *context, cpointingdevice.inttime timestamp, 
                                       int dx, int dy, 
-                                      int buttons):
+                                      int buttons) noexcept:
         cdef PyGILState_STATE st
         st = PyGILState_Ensure()
         
@@ -34,7 +34,7 @@ cdef void defaultCallback(void *context, cpointingdevice.inttime timestamp,
 
 cdef void deviceUpdateCallback(void *context,
                                 const cpointingdevicemanager.PointingDeviceDescriptor &desc,
-                                bool wasAdded):
+                                bool wasAdded) noexcept:
         cdef PyGILState_STATE st
         st = PyGILState_Ensure()
         

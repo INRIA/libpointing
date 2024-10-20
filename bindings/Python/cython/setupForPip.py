@@ -5,7 +5,7 @@ with open("PIP.md", "r") as fh:
 
 setuptools.setup(
      name='libpointing',  
-     version='1.0.8.3',
+     version='1.0.8.4',
      provides=['libpointing'],
      python_requires="==3.11.*",
      package_data={'': ['libpointing.cpython-311-darwin.so', 'libpointing.cpython-311-x86_64-linux-gnu.so', 'libpointing.cp311-win_amd64.pyd']}, 
