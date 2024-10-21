@@ -21,7 +21,8 @@ macx {
     # Needed for IOHIDDeviceRegisterInputReportWithTimeStampCallback
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
     # QMAKE_MAC_SDK = macosx10.15
-    QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+    # QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+    QMAKE_APPLE_DEVICE_ARCHS = arm64
 }
 
 # Compile with c++11 on unix (Qt5/Qt4). Qt6 requires c++17

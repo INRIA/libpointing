@@ -17,7 +17,3 @@ POINTING = ../..
 include($$POINTING/pointing/pointing.pri)
 
 HEADERS   += hidreportparser.h
-
-macx {
-    QMAKE_APPLE_DEVICE_ARCHS = x86_64
-}
