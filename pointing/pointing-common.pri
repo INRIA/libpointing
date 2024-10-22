@@ -21,7 +21,9 @@ macx {
     # Needed for IOHIDDeviceRegisterInputReportWithTimeStampCallback
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
     # QMAKE_MAC_SDK = macosx10.15
+    # Uncomment the following line to build a universal binary for macOS python binding
     # QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+    # for CI on github actions as it is only arm64
     QMAKE_APPLE_DEVICE_ARCHS = arm64
 }
 

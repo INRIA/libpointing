@@ -1,4 +1,5 @@
 [![PyPI Version](https://img.shields.io/pypi/v/libpointing)](https://pypi.org/project/libpointing/)
+[![Downloads](https://static.pepy.tech/badge/libpointing)](https://pepy.tech/project/libpointing)
 [![NPM Version](https://badge.fury.io/js/libpointing.svg?style=flat)](https://npmjs.org/package/libpointing)
 [![Homebrew Version](https://img.shields.io/homebrew/v/libpointing.svg)](https://formulae.brew.sh/formula/libpointing)
 [![choco-shield](https://img.shields.io/chocolatey/v/libpointing)](https://community.chocolatey.org/packages/libpointing)
@@ -116,8 +117,8 @@ int main() {
 
 ## Contributors
 
-* [Nicolas Roussel](http://interaction.lille.inria.fr/~roussel)
-* [Géry Casiez](http://cristal.univ-lille.fr/~casiez/)
+* [Nicolas Roussel](http://direction.bordeaux.inria.fr/~roussel/)
+* [Géry Casiez](https://gery.casiez.net/)
 * [Izzatbek Mukhanov](https://www.linkedin.com/in/izzat-mukhanov-26a93b63)
 
 ## License

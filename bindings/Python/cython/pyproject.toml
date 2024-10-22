@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "libpointing"
+version = "1.0.8.5"
+description = "Python binding for libpointing."
+requires-python = "==3.12.*"
+authors = [
+    {name = "Nicolas Roussel", email = "nicolas.roussel@inria.fr"},
+    {name = "Géry Casiez", email = "gery.casiez@univ-lille.fr"},
+    {name = "Izzatbek Mukhanov"},
+]
+maintainers = [
+    {name = "Géry Casiez", email = "gery.casiez@univ-lille.fr"},
+]
+license = {text = "GPLv2"}
+readme = {file = "PIP.md", content-type = "text/markdown"}
+keywords = ["mouse", "hid", "pointing", "input", "device", "transfer function", "subpixel", "raw-input"]
+classifiers = [
+         "Programming Language :: Python :: 3",
+         "License :: OSI Approved :: MIT License",
+         "Operating System :: OS Independent",
+         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)"
+]
+
+[project.urls]
+homepage = "https://libpointing.org"
+
+[tool.setuptools]
+packages = ["libpointing"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+libpointing = ["libpointing.cpython-312-darwin.so", "libpointing.cpython-312-x86_64-linux-gnu.so", "libpointing.cp312-win_amd64.pyd"]

@@ -1,5 +1,5 @@
 all: pointing
-	python3 setup.py build_ext --inplace
+	python3 buildcythonlib.py build_ext --inplace
 
 pointing:
 	cd ../../../pointing && qmake && make
