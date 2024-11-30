@@ -8,6 +8,7 @@ cimport cdisplaydevice
 cimport cpointingdevice
 cimport cpointingdevicemanager
 cimport curi
+cimport cwinsystempointeracceleration
 
 PointingDeviceManager_Init = False
   
@@ -81,7 +82,34 @@ cdef class URI(object):
 
     def __str__(self):
         return bytes(<char *>self.thiscptr_.asString().c_str()).decode()
-    
+
+IF WINDOWS:
+    cdef class winSystemPointerAcceleration(object):
+        cdef cwinsystempointeracceleration.winSystemPointerAcceleration *thiscptr_ 
+        def __cinit__(self):
+            self.thiscptr_ = new cwinsystempointeracceleration.winSystemPointerAcceleration()
+
+        def __dealloc__(self):
+            del self.thiscptr_
+
+        def set(self, int sliderPosition, bool enhancePointerPrecision):
+            self.thiscptr_.set(sliderPosition, enhancePointerPrecision)
+
+        def setTransferFunction(self, uriString):
+            cdef curi.URI funcUri
+            funcUri.load(uriString)
+            self.thiscptr_.setTransferFunction(funcUri)
+
+        def get(self):
+            cdef string winVersion 
+            cdef int sliderPosition = -1
+            cdef bool enhancePointerPrecision = False
+
+            self.thiscptr_.get(&winVersion, &sliderPosition, &enhancePointerPrecision)
+            return {'winver': winVersion,
+                    'sliderPos': sliderPosition,
+                    'enhancePointerPrecision': enhancePointerPrecision}
+
 
 cdef class PointingDevice(object):
     cdef cpointingdevice.PointingDevice *thiscptr_

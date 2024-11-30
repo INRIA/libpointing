@@ -8,6 +8,8 @@ libpointing = '../../../'
 
 system = platform.system()
 
+windows = False
+
 if system == 'Darwin':
     ext_modules = [Extension(
                         "libpointing.libpointing",
@@ -17,7 +19,7 @@ if system == 'Darwin':
                         include_dirs=[libpointing],
                         library_dirs=["./", libpointing+"pointing"],
                         extra_compile_args=["-stdlib=libc++", "-mmacosx-version-min=10.10", "-std=c++17", "-arch", "arm64", "-arch", "x86_64"],
-                        extra_link_args=["-mmacosx-version-min=10.10", "-framework", "CoreGraphics", "-arch", "arm64", "-arch", "x86_64"],
+                        extra_link_args=["-mmacosx-version-min=10.10", "-framework", "CoreGraphics", "-arch", "arm64", "-arch", "x86_64"]
                         )]
 elif system == 'Linux':
     ext_modules = [Extension(
@@ -31,6 +33,7 @@ elif system == 'Linux':
                          library_dirs=["./"]
                          )]
 elif system == 'Windows':
+    windows = True
     ext_modules = [Extension(
                          "libpointing.libpointing",
                          ["libpointing.pyx"],
@@ -56,5 +59,5 @@ else:
 setup(
   name='libpointing',
   cmdclass={'build_ext': build_ext},
-  ext_modules=cythonize(ext_modules, compiler_directives={'language_level' : "3"})
+  ext_modules=cythonize(ext_modules, compiler_directives={'language_level' : "3"}, compile_time_env={'WINDOWS': windows})
 )

@@ -15,7 +15,7 @@ pointing.dll (or pointing.so) into the bindings/Python/cython directory.
 
 ## Step 2
 Compile the python binding by typing:
-```python setup.py build_ext --inplace```
+```python3 buildcythonlib.py build_ext --inplace```
 
 If you are using windows + Cygwin/mingw there is a bug while compiling pylibpointing.cpp.
 The problem is that distutils is still linking with msvc90, this cause the binding to crash 

@@ -3,5 +3,6 @@ from .libpointing import (
     DisplayDevice,
     TransferFunction,
     PointingDeviceManager,
-    PointingDeviceDescriptor
+    PointingDeviceDescriptor,
+    winSystemPointerAcceleration
     )
