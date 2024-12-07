@@ -10,14 +10,33 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: casiez/libpointing
+    container: ubuntu:latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: compile
+    - uses: actions/checkout@v4
+    - name: Install Qt6 and python
+      run: |
+        apt-get update 
+        export DEBIAN_FRONTEND=noninteractive
+        apt-get install -y qt6-base-dev libxrandr-dev libudev-dev libxi-dev freeglut3-dev
+        apt-get install -y python3.12 python3.12-venv python3-pip cython3
+        mkdir venv
+        python3.12 -m venv venv/
+        . venv/bin/activate
+        python3.12 -m pip install --upgrade pip
+        python3.12 -m pip install setuptools cython
+    - name: compile library
       run: qmake6 && make
-    - name: Save the compile library
-      uses: actions/upload-artifact@v3
+    - name: compile Python binding
+      run: |
+        . venv/bin/activate
+        cp pointing/libpointing.a bindings/Python/cython/
+        cd bindings/Python/cython/
+        python3 buildcythonlib.py build_ext --inplace
+    - name: Save the compiled libraries
+      uses: actions/upload-artifact@v4
       with:
         name: libpointing
-        path: pointing/libpointing.a
+        path: |
+          pointing/libpointing.a
+          bindings/Python/cython/libpointing/*.so
