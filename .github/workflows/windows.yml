@@ -50,7 +50,7 @@ jobs:
       - name: compile library
         run: |
             cd pointing
-            qmake6
+            qmake
             nmake
 #           mingw32-make
 
