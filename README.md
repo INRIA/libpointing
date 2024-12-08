@@ -6,6 +6,7 @@
 
 [![Linux](https://github.com/INRIA/libpointing/actions/workflows/linux.yml/badge.svg)](https://github.com/INRIA/libpointing/actions/workflows/linux.yml)
 [![macOS](https://github.com/INRIA/libpointing/actions/workflows/macOS.yml/badge.svg)](https://github.com/INRIA/libpointing/actions/workflows/macOS.yml)
+[![Windows](https://github.com/INRIA/libpointing/actions/workflows/windows.yml/badge.svg)](https://github.com/INRIA/libpointing/actions/workflows/windows.yml)
 
 # Libpointing
 

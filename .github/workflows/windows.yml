@@ -54,17 +54,17 @@ jobs:
             nmake
 #           mingw32-make
 
-#      - name: compile Python binding
-#        run: |
-#          ./venv/Scripts/activate
-#          cp pointing/release/pointing.lib bindings/Python/cython/
-#          cd bindings/Python/cython/
-#          python.exe --version
-#          python.exe buildcythonlib.py build_ext --inplace
+      - name: compile Python binding
+        run: |
+          ./venv/Scripts/activate
+          cp pointing/release/pointing.lib bindings/Python/cython/
+          cd bindings/Python/cython/
+          python.exe --version
+          python.exe buildcythonlib.py build_ext --inplace
 
       - name: Save the compiled libraries
         uses: actions/upload-artifact@v4
         with:
           path: |
             pointing/release/pointing.lib
-#            bindings/Python/cython/libpointing/*.so
+            bindings/Python/cython/libpointing/*.pyd
