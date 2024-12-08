@@ -57,7 +57,7 @@ jobs:
 #      - name: compile Python binding
 #        run: |
 #          ./venv/Scripts/activate
-#          cp pointing/release/libpointing.lib bindings/Python/cython/
+#          cp pointing/release/pointing.lib bindings/Python/cython/
 #          cd bindings/Python/cython/
 #          python.exe --version
 #          python.exe buildcythonlib.py build_ext --inplace
@@ -66,5 +66,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: |
-            pointing/release/libpointing.lib
+            pointing/release/pointing.lib
 #            bindings/Python/cython/libpointing/*.so
