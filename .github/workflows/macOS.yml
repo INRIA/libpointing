@@ -28,12 +28,14 @@ jobs:
       run: |
         qmake
         make
+
     - name: compile Python binding
       run: |
         source venv/bin/activate
         cp pointing/libpointing.a bindings/Python/cython/
         cd bindings/Python/cython/
         python3.12 buildcythonlib.py build_ext --inplace
+        
     - name: Save the compiled libraries
       uses: actions/upload-artifact@v4
       with:

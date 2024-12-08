@@ -1,0 +1,70 @@
+name: Windows
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+            host: 'windows'
+            target: 'desktop'
+            arch: 'win64_msvc2019_64'
+            dir: '${{ github.workspace }}/qtdir/'
+            install-deps: 'true'
+            archives: 'qtbase'
+            cache: 'false'
+            cache-key-prefix: 'install-qt-action'
+            setup-python: 'true'
+            tools: ''
+            set-env: 'true'
+            tools-only: 'false'
+            aqtversion: '==3.1.*'
+            py7zrversion: '==0.20.*'
+            extra: '--external 7z'
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+            python-version: '3.12' 
+      
+      - name: Install Python librairies
+        run: |
+          python.exe -m ensurepip --upgrade
+          python.exe -m pip install --upgrade pip
+          python.exe -m pip install virtualenv
+          python.exe -m virtualenv venv
+          ./venv/Scripts/activate
+          python.exe -m pip install wheel setuptools cython
+
+      - name: compile library
+        run: |
+            cd pointing
+            qmake6
+            nmake
+#           mingw32-make
+
+#      - name: compile Python binding
+#        run: |
+#          ./venv/Scripts/activate
+#          cp pointing/release/libpointing.a bindings/Python/cython/
+#          cd bindings/Python/cython/
+#          python.exe --version
+#          python.exe buildcythonlib.py build_ext --inplace
+
+      - name: Save the compiled libraries
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            pointing/release/libpointing.a
+#            bindings/Python/cython/libpointing/*.so
