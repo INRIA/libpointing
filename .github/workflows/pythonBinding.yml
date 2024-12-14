@@ -97,5 +97,6 @@ jobs:
           username = __token__
           password = $PYPI_TOKEN
           EOF
+          . venv/bin/activate
           python3 -m twine upload python/*
 
