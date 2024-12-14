@@ -3,13 +3,13 @@ name: Windows
 on:
   workflow_run:
     workflows: [macOS]
-    types:
-      - completed
+    types: [completed]
 
 jobs:
   build:
     
     runs-on: windows-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - uses: actions/checkout@v4

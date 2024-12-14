@@ -3,13 +3,13 @@ name: macOS
 on:
   workflow_run:
     workflows: [Linux]
-    types:
-      - completed
+    types: [completed]
 
 jobs:
   build:
 
     runs-on: macos-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
     - uses: actions/checkout@v4
