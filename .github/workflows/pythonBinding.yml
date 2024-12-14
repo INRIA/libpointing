@@ -1,14 +1,25 @@
+name: Python binding
+
 on:
-  workflow_run:
-    workflows: ["Linux", "macOS", "Windows"]
-    types:
-      - completed
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
+  jobLinux:
+    uses: INRIA/libpointing/blob/master/.github/workflows/linux.yml@main
+
+  jobmacOS:
+    uses: INRIA/libpointing/blob/master/.github/workflows/macOS.yml@main
+
+  jobWindows:
+    uses: INRIA/libpointing/blob/master/.github/workflows/windows.yml@main
+
   build:
 
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: [jobLinux, jobmacOS, jobWindows]
     container: ubuntu:latest
 
     steps:
@@ -31,6 +42,6 @@ jobs:
         run: |
           . venv/bin/activate
           cd bindings/Python/cython/
-          ls libpointing
+          ls -la libpointing/
           python3 -m build
-          ls dist/
+          ls -la dist/
