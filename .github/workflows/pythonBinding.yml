@@ -88,14 +88,14 @@ jobs:
         # if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
         run : |
           cat <<EOF > ~/.pypirc
-[distutils]
-index-servers =
-    libpointing
+          [distutils]
+          index-servers =
+              libpointing
 
-[libpointing]
-repository = https://upload.pypi.org/legacy/
-username = __token__
-password = $PYPI_TOKEN
-EOF
+          [libpointing]
+          repository = https://upload.pypi.org/legacy/
+          username = __token__
+          password = $PYPI_TOKEN
+          EOF
           python3 -m twine upload python/*
 
