@@ -7,9 +7,9 @@ on:
     branches: [ "master" ]
 
   workflow_run:
-    workflows: [Linux macOS Windows]
-    types:
-      - completed
+    workflows: [Linux, macOS, Windows]
+    branches: [ master ]
+    types: [ completed ]
 
 jobs:
 
@@ -19,6 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: ahmadnassri/action-workflow-run-wait@v1
       - name: Install python
         run: |
           apt-get update 
@@ -57,6 +58,21 @@ jobs:
           if_no_artifact_found: fail
           path: windows-artifact
 
+      - name: Copy files from artifacts
+        run: |
+          mkdir librairies
+          mkdir libraries/Linux
+          mkdir libraries/macOS
+          mkdir libraries/Windows
+
+          cp -r linux-artifact/pointing/libpointing.a libraries/Linux/
+          cp -r macOS-artifact/artifact/pointing/libpointing.a libraries/macOS/
+          cp -r windows-artifact/artifact/pointing/release/pointing.lib libraries/Windows/  
+
+          cp -r linux-artifact/libpointing/bindings/Python/cython/libpointing/*.so bindings/Python/cython/libpointing/
+          cp -r macOS-artifact/artifact/bindings/Python/cython/libpointing/*.so bindings/Python/cython/libpointing/
+          cp -r windows-artifact/artifact/bindings/Python/cython/libpointing/*.pyd bindings/Python/cython/libpointing/
+
       - name: compile Python binding
         run: |
           . venv/bin/activate
@@ -64,3 +80,13 @@ jobs:
           ls -la libpointing/
           python3 -m build
           ls -la dist/
+          cd ../../..
+          mkdir python
+          cp -r bindings/Python/cython/dist/*.whl python/
+
+      - name: Save the compiled libraries
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            libraries/
+            python/
