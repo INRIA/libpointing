@@ -1,4 +1,4 @@
-name: Python binding
+name: PythonBinding
 
 on:
   push:
@@ -8,13 +8,13 @@ on:
 
 jobs:
   jobLinux:
-    uses: INRIA/libpointing/blob/master/.github/workflows/linux.yml@main
+    uses: ./linux.yml@main
 
   jobmacOS:
-    uses: INRIA/libpointing/blob/master/.github/workflows/macOS.yml@main
+    uses: ./macOS.yml@main
 
   jobWindows:
-    uses: INRIA/libpointing/blob/master/.github/workflows/windows.yml@main
+    uses: ./windows.yml@main
 
   build:
 
