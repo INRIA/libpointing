@@ -7,9 +7,9 @@ on:
     branches: [ "master" ]
 
   workflow_run:
-    workflows: [Linux, macOS, Windows]
-    types:
-      - completed
+      workflows: [ Linux, macOS, Windows ]
+      branches: [ master ]
+      types: [ completed ]
 
 jobs:
 
@@ -19,6 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: khulnasoft/action-workflow-run-wait@v1
       - name: Install python
         run: |
           apt-get update 
