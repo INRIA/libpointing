@@ -63,7 +63,7 @@ jobs:
           mkdir -p libraries/macOS
           mkdir -p libraries/Windows
 
-          cp -r linux-artifact/pointing/libpointing.a libraries/Linux/
+          cp -r linux-artifact/libpointing/pointing/libpointing.a libraries/Linux/
           cp -r macOS-artifact/artifact/pointing/libpointing.a libraries/macOS/
           cp -r windows-artifact/artifact/pointing/release/pointing.lib libraries/Windows/  
 
