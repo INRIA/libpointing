@@ -8,13 +8,13 @@ on:
 
 jobs:
   jobLinux:
-    uses: ./.github/workflows/linux.yml@main
+    uses: ./.github/workflows/linux.yml
 
   jobmacOS:
-    uses: ./.github/workflows/macOS.yml@main
+    uses: ./.github/workflows/macOS.yml
 
   jobWindows:
-    uses: ./.github/workflows/windows.yml@main
+    uses: ./.github/workflows/windows.yml
 
   build:
 
