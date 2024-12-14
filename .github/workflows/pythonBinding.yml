@@ -31,12 +31,31 @@ jobs:
           python3.12 -m pip install setuptools build cython
 
       - name: Download Linux artifact
-        id: download-artifact
+        id: download-artifact-linux
         uses: dawidd6/action-download-artifact@v7
         with:
           workflow: linux.yml
           workflow_conclusion: success
           if_no_artifact_found: fail
+          path: linux-artifact
+
+      - name: Download macOS artifact
+        id: download-artifact-macos
+        uses: dawidd6/action-download-artifact@v7
+        with:
+          workflow: macOS.yml
+          workflow_conclusion: success
+          if_no_artifact_found: fail
+          path: macOS-artifact
+
+      - name: Download Windows artifact
+        id: download-artifact-windows
+        uses: dawidd6/action-download-artifact@v7
+        with:
+          workflow: windows.yml
+          workflow_conclusion: success
+          if_no_artifact_found: fail
+          path: windows-artifact
 
       - name: compile Python binding
         run: |
