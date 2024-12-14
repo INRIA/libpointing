@@ -1,0 +1,36 @@
+on:
+  workflow_run:
+    workflows: ["Linux", "macOS", "Windows"]
+    types:
+      - completed
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    container: ubuntu:latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install python
+        run: |
+          apt-get update 
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get install -y python3.12 python3.12-venv python3-pip cython3
+          mkdir venv
+          python3.12 -m venv venv/
+          . venv/bin/activate
+          python3.12 -m pip install --upgrade pip
+          python3.12 -m pip install setuptools cython
+
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v4
+
+      - name: compile Python binding
+        run: |
+          . venv/bin/activate
+          cd bindings/Python/cython/
+          ls libpointing
+          python3 -m build
+          ls dist/

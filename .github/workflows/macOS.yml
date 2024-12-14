@@ -26,6 +26,7 @@ jobs:
 
     - name: compile library
       run: |
+        cd pointing
         qmake
         make
 
