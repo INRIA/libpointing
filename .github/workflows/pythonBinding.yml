@@ -8,8 +8,8 @@ on:
 
   workflow_run:
     workflows: [Linux, macOS, Windows]
-    branches: [ master ]
-    types: [ completed ]
+    types:
+      - completed
 
 jobs:
 
@@ -19,7 +19,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ahmadnassri/action-workflow-run-wait@v1
       - name: Install python
         run: |
           apt-get update 
@@ -60,10 +59,9 @@ jobs:
 
       - name: Copy files from artifacts
         run: |
-          mkdir librairies
-          mkdir libraries/Linux
-          mkdir libraries/macOS
-          mkdir libraries/Windows
+          mkdir -p libraries/Linux
+          mkdir -p libraries/macOS
+          mkdir -p libraries/Windows
 
           cp -r linux-artifact/pointing/libpointing.a libraries/Linux/
           cp -r macOS-artifact/artifact/pointing/libpointing.a libraries/macOS/
