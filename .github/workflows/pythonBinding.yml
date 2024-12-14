@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "master" ]
 
+  workflow_run:
+    workflows: [Linux macOS Windows]
+    types:
+      - completed
+
 jobs:
 
   build:
@@ -23,7 +28,7 @@ jobs:
           python3.12 -m venv venv/
           . venv/bin/activate
           python3.12 -m pip install --upgrade pip
-          python3.12 -m pip install setuptools cython
+          python3.12 -m pip install setuptools build cython
 
       - name: Download Linux artifact
         id: download-artifact
