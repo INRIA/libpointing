@@ -185,19 +185,17 @@ jobs:
 
       - name: Copy files from artifacts
         run: |
-          ls -la
-          ls -la linux-artifact
           mkdir -p libraries/Linux
           mkdir -p libraries/macOS
           mkdir -p libraries/Windows
 
-          cp -r linux-artifact/libpointing/pointing/libpointing.a libraries/Linux/
-          cp -r macOS-artifact/artifact/pointing/libpointing.a libraries/macOS/
-          cp -r windows-artifact/artifact/pointing/release/pointing.lib libraries/Windows/  
+          cp -r linux-artifact/pointing/libpointing.a libraries/Linux/
+          cp -r macOS-artifact/pointing/libpointing.a libraries/macOS/
+          cp -r windows-artifact/pointing/release/pointing.lib libraries/Windows/  
 
-          cp -r linux-artifact/libpointing/bindings/Python/cython/libpointing/*.so bindings/Python/cython/libpointing/
-          cp -r macOS-artifact/artifact/bindings/Python/cython/libpointing/*.so bindings/Python/cython/libpointing/
-          cp -r windows-artifact/artifact/bindings/Python/cython/libpointing/*.pyd bindings/Python/cython/libpointing/
+          cp -r linux-artifact/bindings/Python/cython/libpointing/*.so bindings/Python/cython/libpointing/
+          cp -r macOS-artifact/bindings/Python/cython/libpointing/*.so bindings/Python/cython/libpointing/
+          cp -r windows-artifact/bindings/Python/cython/libpointing/*.pyd bindings/Python/cython/libpointing/
 
       - name: compile Python binding
         run: |

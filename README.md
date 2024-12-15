@@ -4,9 +4,7 @@
 [![Homebrew Version](https://img.shields.io/homebrew/v/libpointing.svg)](https://formulae.brew.sh/formula/libpointing)
 [![choco-shield](https://img.shields.io/chocolatey/v/libpointing)](https://community.chocolatey.org/packages/libpointing)
 
-[![Linux](https://github.com/INRIA/libpointing/actions/workflows/linux.yml/badge.svg)](https://github.com/INRIA/libpointing/actions/workflows/linux.yml)
-[![macOS](https://github.com/INRIA/libpointing/actions/workflows/macOS.yml/badge.svg)](https://github.com/INRIA/libpointing/actions/workflows/macOS.yml)
-[![Windows](https://github.com/INRIA/libpointing/actions/workflows/windows.yml/badge.svg)](https://github.com/INRIA/libpointing/actions/workflows/windows.yml)
+[![CI](https://github.com/INRIA/libpointing/actions/workflows/CI.yml/badge.svg)](https://github.com/INRIA/libpointing/actions/workflows/CI.yml)
 
 # Libpointing
 
