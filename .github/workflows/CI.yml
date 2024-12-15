@@ -169,19 +169,24 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: LinuxArtifact
+          path: linux-artifact
 
       - name: Download macOS artifact
         uses: actions/download-artifact@v4
         with:
             name: macOSArtifact
+            path: macOS-artifact
 
       - name: Download Windows artifact
         uses: actions/download-artifact@v4
         with:
             name: WindowsArtifact
+            path: windows-artifact
 
       - name: Copy files from artifacts
         run: |
+          ls -la
+          ls -la linux-artifact
           mkdir -p libraries/Linux
           mkdir -p libraries/macOS
           mkdir -p libraries/Windows
