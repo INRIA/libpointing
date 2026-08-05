@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  PYTHON_VERSION: '3.13'
+
 jobs:
   buildLinux:
 
@@ -13,18 +16,22 @@ jobs:
     container: ubuntu:latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
+    - name: Setup Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
     - name: Install Qt6 and python
       run: |
         apt-get update 
         export DEBIAN_FRONTEND=noninteractive
         apt-get install -y qt6-base-dev libxrandr-dev libudev-dev libxi-dev freeglut3-dev
-        apt-get install -y python3.12 python3.12-venv python3-pip cython3
+        apt-get install -y python3-venv python3-pip cython3
         mkdir venv
-        python3.12 -m venv venv/
+        python -m venv venv/
         . venv/bin/activate
-        python3.12 -m pip install --upgrade pip
-        python3.12 -m pip install setuptools cython
+        python -m pip install --upgrade pip
+        python -m pip install setuptools cython
         
     - name: compile library
       run: qmake6 && make
@@ -34,10 +41,10 @@ jobs:
         . venv/bin/activate
         cp pointing/libpointing.a bindings/Python/cython/
         cd bindings/Python/cython/
-        python3 buildcythonlib.py build_ext --inplace
+        python buildcythonlib.py build_ext --inplace
 
     - name: Save the compiled libraries
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: LinuxArtifact
         path: |
@@ -49,17 +56,17 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Install Qt6 and python
       run: |
         brew update
         brew install qt
-        brew install python@3.12
+        brew install python@${PYTHON_VERSION}
         mkdir venv
-        python3.12 -m venv venv/
+        python${PYTHON_VERSION} -m venv venv/
         source venv/bin/activate
-        python3.12 -m pip install --upgrade pip
-        python3.12 -m pip install setuptools cython
+        python${PYTHON_VERSION} -m pip install --upgrade pip
+        python${PYTHON_VERSION} -m pip install setuptools cython
 
     - name: compile library
       run: |
@@ -72,10 +79,10 @@ jobs:
         source venv/bin/activate
         cp pointing/libpointing.a bindings/Python/cython/
         cd bindings/Python/cython/
-        python3.12 buildcythonlib.py build_ext --inplace
+        python${PYTHON_VERSION} buildcythonlib.py build_ext --inplace
         
     - name: Save the compiled libraries
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: macOSArtifact
         path: |
@@ -87,14 +94,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
             host: 'windows'
             target: 'desktop'
-            arch: 'win64_msvc2019_64'
+            arch: 'win64_msvc2022_64'
             dir: '${{ github.workspace }}/qtdir/'
             install-deps: 'true'
             archives: 'qtbase'
@@ -109,9 +116,9 @@ jobs:
             extra: '--external 7z'
 
       - name: Install Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-            python-version: '3.12' 
+            python-version: ${{ env.PYTHON_VERSION }} 
       
       - name: Install Python librairies
         run: |
@@ -138,7 +145,7 @@ jobs:
           python.exe buildcythonlib.py build_ext --inplace
 
       - name: Save the compiled libraries
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: WindowsArtifact
           path: |
@@ -153,32 +160,36 @@ jobs:
     container: ubuntu:latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Install python
         run: |
           apt-get update 
           export DEBIAN_FRONTEND=noninteractive
-          apt-get install -y python3.12 python3.12-venv python3-pip cython3
+          apt-get install -y python3-venv python3-pip cython3
           mkdir venv
-          python3.12 -m venv venv/
+          python -m venv venv/
           . venv/bin/activate
-          python3.12 -m pip install --upgrade pip
-          python3.12 -m pip install setuptools build cython twine
+          python -m pip install --upgrade pip
+          python -m pip install setuptools build cython twine
 
       - name: Download Linux artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: LinuxArtifact
           path: linux-artifact
 
       - name: Download macOS artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
             name: macOSArtifact
             path: macOS-artifact
 
       - name: Download Windows artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
             name: WindowsArtifact
             path: windows-artifact
@@ -202,14 +213,14 @@ jobs:
           . venv/bin/activate
           cd bindings/Python/cython/
           ls -la libpointing/
-          python3 -m build
+          python -m build
           ls -la dist/
           cd ../../..
           mkdir python
           cp -r bindings/Python/cython/dist/*.whl python/
 
       - name: Save the compiled libraries
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: librairiesAndPythonBinding
           path: |
@@ -223,4 +234,4 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
         run : |
           . venv/bin/activate
-          python3 -m twine upload python/*
+          python -m twine upload python/*
