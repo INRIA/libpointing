@@ -6,11 +6,12 @@ on:
   pull_request:
     branches: [ "master" ]
 
-env:
-  PYTHON_VERSION: '3.14'
-
 jobs:
   buildLinux:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: &python-versions ['3.10', '3.11', '3.12', '3.13', '3.14']
 
     runs-on: ubuntu-latest
     container: ubuntu:latest
@@ -20,7 +21,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python-version: ${{ matrix.python-version }}
     - name: Install Qt6 and python
       run: |
         apt-get update 
@@ -46,12 +47,16 @@ jobs:
     - name: Save the compiled libraries
       uses: actions/upload-artifact@v5
       with:
-        name: LinuxArtifact
+        name: LinuxArtifact-${{ matrix.python-version }}
         path: |
           pointing/libpointing.a
           bindings/Python/cython/libpointing/*.so
 
   buildMacOS:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: *python-versions
 
     runs-on: macos-latest
 
@@ -61,12 +66,12 @@ jobs:
       run: |
         brew update
         brew install qt
-        brew install python@${PYTHON_VERSION}
+        brew install python@${{ matrix.python-version }}
         mkdir venv
-        python${PYTHON_VERSION} -m venv venv/
+        python${{ matrix.python-version }} -m venv venv/
         source venv/bin/activate
-        python${PYTHON_VERSION} -m pip install --upgrade pip
-        python${PYTHON_VERSION} -m pip install setuptools cython
+        python${{ matrix.python-version }} -m pip install --upgrade pip
+        python${{ matrix.python-version }} -m pip install setuptools cython
 
     - name: compile library
       run: |
@@ -79,18 +84,22 @@ jobs:
         source venv/bin/activate
         cp pointing/libpointing.a bindings/Python/cython/
         cd bindings/Python/cython/
-        python${PYTHON_VERSION} buildcythonlib.py build_ext --inplace
+        python${{ matrix.python-version }} buildcythonlib.py build_ext --inplace
         
     - name: Save the compiled libraries
       uses: actions/upload-artifact@v5
       with:
-        name: macOSArtifact
+        name: macOSArtifact-${{ matrix.python-version }}
         path: |
             pointing/libpointing.a
             bindings/Python/cython/libpointing/*.so
 
   buildWindows:
-    
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: *python-versions
+
     runs-on: windows-latest
 
     steps:
@@ -118,7 +127,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v6
         with:
-            python-version: ${{ env.PYTHON_VERSION }} 
+            python-version: ${{ matrix.python-version }} 
       
       - name: Install Python librairies
         run: |
@@ -147,7 +156,7 @@ jobs:
       - name: Save the compiled libraries
         uses: actions/upload-artifact@v5
         with:
-          name: WindowsArtifact
+          name: WindowsArtifact-${{ matrix.python-version }}
           path: |
             pointing/release/pointing.lib
             bindings/Python/cython/libpointing/*.pyd
@@ -164,7 +173,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version: '3.14'
       - name: Install python
         run: |
           apt-get update 
@@ -176,23 +185,26 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install setuptools build cython twine
 
-      - name: Download Linux artifact
+      - name: Download Linux artifacts
         uses: actions/download-artifact@v5
         with:
-          name: LinuxArtifact
+          pattern: LinuxArtifact-*
           path: linux-artifact
+          merge-multiple: true
 
-      - name: Download macOS artifact
+      - name: Download macOS artifacts
         uses: actions/download-artifact@v5
         with:
-            name: macOSArtifact
+            pattern: macOSArtifact-*
             path: macOS-artifact
+            merge-multiple: true
 
-      - name: Download Windows artifact
+      - name: Download Windows artifacts
         uses: actions/download-artifact@v5
         with:
-            name: WindowsArtifact
+            pattern: WindowsArtifact-*
             path: windows-artifact
+            merge-multiple: true
 
       - name: Copy files from artifacts
         run: |
