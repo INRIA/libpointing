@@ -7,6 +7,7 @@ cimport csubpixelfunction
 cimport cdisplaydevice
 cimport cpointingdevice
 cimport cpointingdevicemanager
+cimport cpointingcursor
 cimport curi
 cimport cwinsystempointeracceleration
 
@@ -255,6 +256,18 @@ class Bounds(object):
 
     def __ne__(self, other):
         return not self==other
+
+cdef class PointingCursor(object):
+    @staticmethod
+    def setPosition(x, y):
+        cpointingcursor.PointingCursor.setPosition(x, y)
+
+    @staticmethod
+    def getPosition():
+        cdef double x = -1
+        cdef double y = -1
+        cpointingcursor.PointingCursor.getPosition(&x, &y)
+        return x, y
 
 cdef class DisplayDevice(object):    
     cdef cdisplaydevice.DisplayDevice *thiscptr_

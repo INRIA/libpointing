@@ -6,6 +6,7 @@ from .libpointing import (
     TransferFunction,
     PointingDeviceManager,
     PointingDeviceDescriptor,
+    PointingCursor,
 )
 
 if sys.platform.startswith("win"):
