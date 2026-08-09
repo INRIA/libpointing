@@ -224,6 +224,10 @@ jobs:
         run: |
           . venv/bin/activate
           cd bindings/Python/cython/
+
+          cp -R ../../../pointing-echomouse libpointing/
+          find libpointing/pointing-echomouse -type f ! \( -name "*.dict" -o -name "*.dat" \) -exec rm -f {} +
+
           ls -la libpointing/
           python -m build
           ls -la dist/

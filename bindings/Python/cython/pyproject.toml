@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "libpointing"
-version = "1.2.0"
+version = "1.2.1"
 description = "Python binding for libpointing."
 requires-python = ">=3.10,<3.15"
 authors = [
@@ -31,4 +31,4 @@ packages = ["libpointing"]
 include-package-data = true
 
 [tool.setuptools.package-data]
-libpointing = ["*.so", "*.pyd"]
+libpointing = ["*.so", "*.pyd", "pointing-echomouse/**/*"]
